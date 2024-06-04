@@ -9,15 +9,15 @@ const Nav = () => {
             NFT Marketplace <FaShopify />
           </a>
         </div>
-        <nav className="flex gap-3 w-[50%] md:w-[30%] p-3 *:text-md *:p-3  ">
+        <nav className="flex gap-3 w-[50%] md:w-[30%] p-3 *:text-[0.8rem] *:p-3  ">
           <a href="/collections">Collections</a>
           <a href="collections/create">Create</a>
-          <a href="/dashboard">Dashboard</a>
+          <a href="collections/dashboard">Dashboard</a>
         </nav>
         <div id="profile" className=" p-3 ">
           <button
             type="button"
-            className=" text-md bg-green-500 text-white font-bold py-2 px-6 rounded flex items-center gap-2 hover:bg-green-600 transition-all duration-300 ease-in-out"
+            className=" text-[0.8rem] bg-green-500 text-white font-bold py-2 px-6 rounded flex items-center gap-2 hover:bg-green-600 transition-all duration-300 ease-in-out"
           >
             <span>connect your</span> <FaWallet />
           </button>
