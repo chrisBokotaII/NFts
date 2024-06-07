@@ -7,3 +7,12 @@
   padding: 0;
   box-sizing: border-box;
 }
+@layer components {
+  .overlay {
+    border-image: linear-gradient(
+        hsla(138, 100%, 50%, 0.3),
+        hsla(0, 0%, 0%, 0.3)
+      )
+      fill 1;
+  }
+}
