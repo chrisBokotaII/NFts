@@ -1,9 +1,24 @@
+import { useState } from "react";
 import { data } from "../data";
+import Preview from "./Preview";
+
+interface IHome {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+}
 const Table = () => {
+  const [toggle, setToggle] = useState(false);
+  const [home, setHome] = useState<IHome | undefined>({} as IHome);
+  const togglePop = (home?: IHome) => {
+    setHome(home);
+    toggle ? setToggle(false) : setToggle(true);
+  };
   return (
-    <div className="w-full m-auto ">
-      <div className="overflow-x-auto mt-6">
-        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-[0.7rem] ">
+    <div className="w-[90%] m-auto ">
+      <div className="overflow-x-auto mt-6 h-[60vh]">
+        <table className="table-auto bg-white text-[0.7rem]  border-separate border-spacing-2 border bordr-slate-500 ">
           <thead className="ltr:text-left rtl:text-right">
             <tr>
               <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem] ">
@@ -27,17 +42,21 @@ const Table = () => {
             </tr>
           </thead>
 
-          <tbody className="divide-y mb-4 divide-gray-200 p-2">
+          <tbody className="text-[0.7rem]">
             {data.map((item, index) => (
-              <tr key={index} className="">
-                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+              <tr
+                key={index}
+                className="cursor-pointer hover:bg-slate-400"
+                onClick={() => togglePop(item)}
+              >
+                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 ">
                   {item.id}
                 </td>
                 <td>
                   <img
                     src="../images/bg.jpg"
                     alt="img"
-                    className="w-[60px] rounded-lg"
+                    className="w-[40%] rounded-lg text-center object-cover"
                   />
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 text-gray-700">
@@ -63,6 +82,7 @@ const Table = () => {
           </tbody>
         </table>
       </div>
+      {toggle && <Preview home={home || undefined} togglePop={togglePop} />}
     </div>
   );
 };
