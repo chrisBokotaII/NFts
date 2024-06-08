@@ -8,7 +8,6 @@ const config: HardhatUserConfig = {
     enabled: true,
     currency: "USD",
     coinmarketcap: process.env.COINMARKETCAP_API_KEY,
-    outputFile: "gas-report.txt",
   },
   networks: {
     hardhatMetamask: {
@@ -17,9 +16,9 @@ const config: HardhatUserConfig = {
       chainId: 31337,
     },
   },
-  paths:{
-    artifacts: './frontend/src/artifacts'
-  }
+  paths: {
+    artifacts: "./frontend/src/artifacts",
+  },
 };
 
 export default config;

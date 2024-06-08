@@ -29,14 +29,44 @@ const Nav = ({ account, setAccount }) => {
           </a>
         </div>
         <nav className="flex gap-3 w-[50%] md:w-[30%] p-3 *:text-[0.8rem] *:p-3  ">
-          <a href="/collections">Collections</a>
-          <a href="/collections/create">Create</a>
-          <a href="/collections/dashboard">Dashboard</a>
+          <a
+            href="/collections"
+            className={
+              window.location.href === "http://localhost:5173/collections"
+                ? "underline underline-offset-4"
+                : "text-secondary"
+            }
+          >
+            Home
+          </a>
+          <a
+            href="/collections/create"
+            className={
+              window.location.href ===
+              "http://localhost:5173/collections/create"
+                ? "underline underline-offset-4"
+                : "text-secondary"
+            }
+          >
+            Create
+          </a>
+          <a
+            href="/collections/dashboard"
+            className={
+              window.location.href ===
+              "http://localhost:5173/collections/dashboard"
+                ? "underline underline-offset-4"
+                : "text-secondary"
+            }
+          >
+            Dashboard
+          </a>
         </nav>
         <div id="profile" className=" p-3 ">
           {account ? (
             <button
               type="button"
+              disabled
               className=" text-[0.8rem] bg-green-500 text-white font-bold py-2 px-6 rounded flex items-center gap-2 hover:bg-green-600 transition-all duration-300 ease-in-out"
             >
               <span>

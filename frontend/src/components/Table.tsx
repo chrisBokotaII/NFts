@@ -17,7 +17,7 @@ const Table = () => {
   };
   return (
     <div className="w-[90%] m-auto ">
-      <div className="overflow-x-auto mt-6 h-[60vh]">
+      <div className="overflow-x-auto mt-6 h-[67vh]">
         <table className="table-auto bg-white text-[0.7rem]  border-separate border-spacing-2 border bordr-slate-500 ">
           <thead className="ltr:text-left rtl:text-right">
             <tr>
