@@ -1,0 +1,46 @@
+write the read me file for this project
+
+# Rare NFT Marketplace
+
+This is a project for a rare NFT marketplace built using Solidity, Hardhat, and React.
+
+## Getting Started
+
+1. Clone the repository locally.
+2. Install the dependencies by running `npm install` in the `frontend` and `backend` directories.
+3. Run the development servers by running `npm run dev` in the `frontend`
+4. Open your browser and navigate to `http://localhost:3000` to view the marketplace.
+
+## Project Structure
+
+The project is divided into two main directories: `frontend` and `backend`.
+
+- The `frontend` directory contains the React frontend of the marketplace.
+- The `backend` directory contains the Solidity smart contracts and the Hardhat development environment.
+
+## Smart Contracts
+
+The project includes two smart contracts: `Market.sol` and `Lock.sol`.
+
+- `Market.sol` is the main contract that allows users to create, buy, and list NFTs.
+- `Lock.sol` is a contract that allows users to mint their NFTS then list them for sale.
+
+## Tests
+
+The project includes tests for the smart contracts. You can run the tests by running `npx hardhat test` in the `backend` directory.
+
+## Deployment
+
+The project is deployed on the Rinkeby test network. You can view the deployed contracts and interact with them on the Rinkeby Etherscan.
+
+## Contributing
+
+If you would like to contribute to this project, please submit a pull request with your changes.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+I would like to acknowledge the OpenZeppelin team for their awesome Solidity libraries and the Pinata team for their easy-to-use IPFS service.
