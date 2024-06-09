@@ -23,7 +23,9 @@ export const data = [
   {
     id: 4,
     name: "Prehensile-tailed porcupine",
-    description: "Major laceration of celiac artery",
+    description:
+      "Corrosions of other specified parts of unspecified eye and adnexa",
+
     price: "$73.32",
   },
   {

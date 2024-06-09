@@ -9,7 +9,7 @@ This is a project for a rare NFT marketplace built using Solidity, Hardhat, and 
 1. Clone the repository locally.
 2. Install the dependencies by running `npm install` in the `frontend` and `backend` directories.
 3. Run the development servers by running `npm run dev` in the `frontend`
-4. Open your browser and navigate to `http://localhost:3000` to view the marketplace.
+4. Open your browser and navigate to `http://localhost:5173/collections` to view the marketplace.
 
 ## Project Structure
 

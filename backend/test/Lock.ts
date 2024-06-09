@@ -12,7 +12,7 @@ describe("Lock", function () {
     const [seller, admin, buyer] = await hre.ethers.getSigners();
 
     const Lock = await hre.ethers.getContractFactory("Collections");
-    const lock = await Lock.deploy(seller.address);
+    const lock = await Lock.deploy();
     await lock.waitForDeployment();
 
     const Market = await hre.ethers.getContractFactory("Marketplace");
@@ -26,7 +26,6 @@ describe("Lock", function () {
       const { lock, seller, admin, market } = await loadFixture(
         deployOneYearLockFixture
       );
-      expect(await lock.owner()).to.equal(seller.address);
       expect(await market.admin()).to.equal(admin.address);
       expect(await market.nftAddress()).to.equal(lock.target);
     });

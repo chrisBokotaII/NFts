@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
 // Uncomment this line to use console.log
@@ -6,19 +6,18 @@ pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Collections is ERC721, ERC721URIStorage, Ownable {
+contract Collections is ERC721, ERC721URIStorage {
     uint256 public _nextTokenId;
 
     mapping(address =>uint256[]) public _balanceOf;
 
-    constructor(address initialOwner)
+    constructor()
         ERC721("Colletcion", "CCC")
-        Ownable(initialOwner)
+        
     {}
 
-    function safeMint(address to, string memory uri) public onlyOwner {
+    function safeMint(address to, string memory uri) public{
         uint256 tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);

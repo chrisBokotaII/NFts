@@ -61,6 +61,16 @@ const Nav = ({ account, setAccount }) => {
           >
             Dashboard
           </a>
+          <a
+            href="/marketplace"
+            className={
+              window.location.href === "http://localhost:5173/marketplace"
+                ? "underline underline-offset-4"
+                : "text-secondary"
+            }
+          >
+            Marketplace
+          </a>
         </nav>
         <div id="profile" className=" p-3 ">
           {account ? (

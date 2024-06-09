@@ -47,7 +47,7 @@ const Create = () => {
   };
 
   return (
-    <div className="w-1/2 m-auto bg-hero-pattern p-2 rounded-xl overlay">
+    <div className="w-1/2 m-auto  p-2 rounded-xl overlay">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-3 has-[input]:p-2 justify-center items-center"
