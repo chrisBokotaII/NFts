@@ -12,7 +12,7 @@ const Card = ({ id, name, description, price }: IHome) => {
         {name} {id}
       </h1>
       <img
-        src="../images/bg.jpg"
+        src="/static/images/bg.jpg"
         alt=""
         className="w-[100%]  rounded-xl object-cover"
       />

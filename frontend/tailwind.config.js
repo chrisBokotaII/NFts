@@ -36,8 +36,8 @@ export default {
       },
       backgroundImage: {
         "hero-pattern":
-          "linear-gradient(to bottom, rgba(0, 0, 0, 0.9),rgba(0, 0, 0, 0.6)),url('./images/bg.jpg')",
-        "footer-texture": "url('./images/bg.jpg')",
+          "linear-gradient(to bottom, rgba(0, 0, 0, 0.9),rgba(0, 0, 0, 0.6)),url('/static/images/bg.jpg')",
+        "footer-texture": "url('../static/images/bg.jpg')",
       },
       backgroundSize: {
         "hero-pattern": "cover",

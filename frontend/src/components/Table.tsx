@@ -54,7 +54,7 @@ const Table = () => {
                 </td>
                 <td>
                   <img
-                    src="../images/bg.jpg"
+                    src="/static/images/bg.jpg"
                     alt="img"
                     className="w-[40%] rounded-lg text-center object-cover"
                   />

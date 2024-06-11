@@ -23,7 +23,7 @@ const Preview = ({
         <div className="w-[80%] h-[300px] fixed top-1/2 left-2/3 -translate-x-1/2 -translate-y-1/2 text-white flex gap-4 ">
           <div>
             <img
-              src="../images/bg.jpg"
+              src="/static/images/bg.jpg"
               alt=""
               className="w-[100%] h-[300px] rounded-lg object-cover"
             />

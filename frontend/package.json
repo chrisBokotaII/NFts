@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@pushprotocol/restapi": "^1.7.23",
     "@types/node-fetch": "^2.6.11",
     "axios": "^1.7.2",
     "dotenv": "^16.4.5",

@@ -30,9 +30,9 @@ const Nav = ({ account, setAccount }) => {
         </div>
         <nav className="flex gap-3 w-[50%] md:w-[30%] p-3 *:text-[0.8rem] *:p-3  ">
           <a
-            href="/collections"
+            href="/"
             className={
-              window.location.href === "http://localhost:5173/collections"
+              window.location.href === "/"
                 ? "underline underline-offset-4"
                 : "text-secondary"
             }
@@ -40,10 +40,9 @@ const Nav = ({ account, setAccount }) => {
             Home
           </a>
           <a
-            href="/collections/create"
+            href="/create"
             className={
-              window.location.href ===
-              "http://localhost:5173/collections/create"
+              window.location.href === "/create"
                 ? "underline underline-offset-4"
                 : "text-secondary"
             }
@@ -51,10 +50,9 @@ const Nav = ({ account, setAccount }) => {
             Create
           </a>
           <a
-            href="/collections/dashboard"
+            href="/dashboard"
             className={
-              window.location.href ===
-              "http://localhost:5173/collections/dashboard"
+              window.location.href === "/dashboard"
                 ? "underline underline-offset-4"
                 : "text-secondary"
             }
@@ -64,7 +62,7 @@ const Nav = ({ account, setAccount }) => {
           <a
             href="/marketplace"
             className={
-              window.location.href === "http://localhost:5173/marketplace"
+              window.location.href === "/marketplace"
                 ? "underline underline-offset-4"
                 : "text-secondary"
             }
