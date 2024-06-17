@@ -49,10 +49,12 @@ contract Marketplace {
         _;
         locked = false;
     }
+    error PriceGeaterThanZero( string name, uint256 value );
 
     function listNFT(uint256 _tokenId, uint256 _price) external onlyOwner(_tokenId) {
-        require(_price > 0, "Price must be greater than zero");
-
+        if(_price <= 0){
+            revert PriceGeaterThanZero("Price must be greater than zero", _price);
+        }
         // Transfer the NFT from the owner to the marketplace contract
         token.transferFrom(msg.sender, address(this), _tokenId);
 
