@@ -15,6 +15,10 @@ const config: HardhatUserConfig = {
       accounts: [process.env.PK as string],
       chainId: 31337,
     },
+    ganache: {
+      url: process.env.GANACHE_URL,
+      accounts: [process.env.PRIVATE_KEY as string],
+    },
   },
   paths: {
     artifacts: "../frontend/src/artifacts",

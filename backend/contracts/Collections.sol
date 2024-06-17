@@ -6,11 +6,12 @@ pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
-contract Collections is ERC721, ERC721URIStorage {
+contract Collections is ERC721, ERC721URIStorage,ERC721Enumerable {
     uint256 public _nextTokenId;
 
-    mapping(address =>uint256[]) public _balanceOf;
+    
 
     constructor()
         ERC721("Colletcion", "CCC")
@@ -21,37 +22,9 @@ contract Collections is ERC721, ERC721URIStorage {
         uint256 tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
-        _balanceOf[to].push(tokenId);
+       
 
     }
-    function indexOf(uint256[] memory arr, uint256 searchFor) private pure returns (uint256) {
-  for (uint256 i = 0; i < arr.length; i++) {
-    if (arr[i] == searchFor) {
-      return i;
-    }
-  }
-  return arr.length ; // not found
-}
-    function remove(address owner, uint256 tokenId) internal {
-        uint256 index = indexOf(_balanceOf[owner], tokenId);
-        require(_balanceOf[owner][index] == tokenId, "ERC721: invalid token ID");
-        require( index<_balanceOf[owner].length, "ERC721: invalid token ID");
-        for(uint256 i = index; i < _balanceOf[owner].length-1; i++){
-            _balanceOf[owner][i] = _balanceOf[owner][i+1];
-
-        }
-        _balanceOf[owner].pop();
-        
-    }
-    function getBalanceOf(address owner) public view returns(uint256[] memory){
-        return _balanceOf[owner];
-    }
-    function approve( address to, uint256 tokenId) public override(ERC721,IERC721) {
-        remove(msg.sender, tokenId);
-        _balanceOf[to].push(tokenId);
-        super.approve(to, tokenId);
-    }
-    
 
     // The following functions are overrides required by Solidity.
 
@@ -64,10 +37,27 @@ contract Collections is ERC721, ERC721URIStorage {
         return super.tokenURI(tokenId);
     }
 
+  // The following functions are overrides required by Solidity.
+
+    function _update(address to, uint256 tokenId, address auth)
+        internal
+        override(ERC721, ERC721Enumerable)
+        returns (address)
+    {
+        return super._update(to, tokenId, auth);
+    }
+
+    function _increaseBalance(address account, uint128 value)
+        internal
+        override(ERC721, ERC721Enumerable)
+    {
+        super._increaseBalance(account, value);
+    }
+
     function supportsInterface(bytes4 interfaceId)
         public
         view
-        override(ERC721, ERC721URIStorage)
+        override(ERC721, ERC721URIStorage, ERC721Enumerable)
         returns (bool)
     {
         return super.supportsInterface(interfaceId);

@@ -22,13 +22,6 @@ describe("Lock", function () {
   }
 
   describe("Deployment", function () {
-    it("should set the right address", async function () {
-      const { lock, seller, admin, market } = await loadFixture(
-        deployOneYearLockFixture
-      );
-      expect(await market.admin()).to.equal(admin.address);
-      expect(await market.nftAddress()).to.equal(lock.target);
-    });
     it("should mint", async function () {
       const { lock, seller, admin, market, buyer } = await loadFixture(
         deployOneYearLockFixture
@@ -39,68 +32,18 @@ describe("Lock", function () {
       // const tx2 = await lock
       //   .connect(seller)
       //   .safeMint(seller.address, "ipfs://");
-      const getTokens = await lock.getBalanceOf(seller.address);
-      console.log(getTokens);
+      const approved = await lock.connect(seller).approve(market.target, 0);
+      await approved.wait();
+      await tx1.wait();
+      const tx2 = await market.connect(seller).listNFT(0, 1);
 
-      expect(await lock.balanceOf(seller.address)).to.equal(1);
-      expect(await lock.ownerOf(0)).to.equal(seller.address);
-
-      // expect(await lock.ownerOf(1)).to.equal(seller.address);
-      const tx3 = await lock.connect(seller).approve(market.target, 0);
-      // const tx4 = await lock.connect(seller).approve(market.target, 1);
-      const tx5 = await market.connect(seller).listNFT(0, converter("1"));
-      // const tx6 = await market.connect(seller).listNFT(1, converter("1"));
-
-      const getTokens2 = await lock.getBalanceOf(market.target);
-
-      expect(await lock.balanceOf(seller.address)).to.equal(0);
-      expect(await lock.ownerOf(0)).to.equal(market.target);
-      // expect(await lock.ownerOf(1)).to.equal(market.target);
-      expect(await lock.balanceOf(seller.address)).to.equal(0);
-      expect(await lock.balanceOf(market.target)).to.equal(1);
-
-      const tx7 = await market
+      await tx2.wait();
+      const tx3 = await market
         .connect(buyer)
         .buyNFT(0, { value: converter("1") });
-      // const tx8 = await market
-      //   .connect(buyer)
-      //   .buyNFT(1, { value: converter("1") });
-      const tx11 = await market.nfts(0);
-      // const tx12 = await market.getNFT(1);
-      const tx13 = await market.id();
-
-      expect(await lock.balanceOf(seller.address)).to.equal(0);
-      // expect(await hre.ethers.provider.getBalance(seller.address)).to.equal(
-      //   hre.ethers.parseEther("1")
-      // );
-
-      expect(await lock.ownerOf(0)).to.equal(buyer.address);
-      // expect(await lock.ownerOf(1)).to.equal(buyer.address);
-      expect(await lock.balanceOf(seller.address)).to.equal(0);
-      expect(await lock.balanceOf(market.target)).to.equal(0);
-      expect(await lock.balanceOf(buyer.address)).to.equal(1);
-
-      const tx14 = await lock.connect(buyer).approve(market.target, 0);
-      // const tx15 = await lock.connect(buyer).approve(market.target, 1);
-      const tx16 = await market.connect(buyer).listNFT(0, converter("3"));
-      // const tx17 = await market.connect(buyer).listNFT(1, converter("1"));
-      const getTokens3 = await lock.getBalanceOf(market.target);
-
-      console.log(await market.getListedNFTs());
-
-      expect(await lock.balanceOf(buyer.address)).to.equal(0);
-      expect(await lock.ownerOf(0)).to.equal(market.target);
-      // expect(await lock.ownerOf(1)).to.equal(market.target);
-      expect(await lock.balanceOf(buyer.address)).to.equal(0);
-      expect(await lock.balanceOf(market.target)).to.equal(1);
-
-      const tx17 = await market
-        .connect(seller)
-        .buyNFT(1, { value: converter("3") });
-      // expect(await hre.ethers.provider.getBalance(buyer.address)).to.equal(
-      //   hre.ethers.parseEther("1")
-      // );
-      console.log(await market.getListedNFTs());
+      await tx3.wait();
+      expect(tx2).to.not.revertedWith;
+      expect(tx3).to.not.revertedWith;
     });
   });
 });

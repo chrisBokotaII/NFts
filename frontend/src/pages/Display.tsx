@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
 import Nav from "../components/Nav";
 import { ethers } from "ethers";
-import { data } from "../data";
 import Card from "../components/Card";
+import Collections from "../artifacts/contracts/Collections.sol/Collections.json";
+import Marketplace from "../artifacts/contracts/Market.sol/Marketplace.json";
 
 const Display = () => {
   const [account, setAccount] = useState("");
+  const [provider, setProvider] = useState<ethers.BrowserProvider>();
+  const [contract, setContract] = useState<ethers.Contract>();
+  const [market, setMarket] = useState<ethers.Contract>();
+
+  const collectionsAddress = import.meta.env
+    .VITE_NFT_CONTRACT_ADDRESS as string;
+  const marketplaceAddress = import.meta.env
+    .VITE_MARKETPLACE_CONTRACT_ADDRESS as string;
 
   const connectWallet = async () => {
     if (
@@ -13,6 +22,7 @@ const Display = () => {
       typeof window.ethereum !== "undefined"
     ) {
       const provider = new ethers.BrowserProvider(window.ethereum);
+      setProvider(provider);
       const signer = await provider.getSigner();
       const account = await signer.getAddress();
       setAccount(account);
@@ -27,30 +37,36 @@ const Display = () => {
     }
   };
   useEffect(() => {
+    if (provider) {
+      const contract = new ethers.Contract(
+        collectionsAddress,
+        Collections.abi,
+        provider
+      );
+      const contract2 = new ethers.Contract(
+        marketplaceAddress,
+        Marketplace.abi,
+        provider
+      );
+      setMarket(contract2);
+      setContract(contract);
+    }
+  }, [provider]);
+
+  useEffect(() => {
     connectWallet();
   }, []);
-  const renderCards = () => {
-    return data
-      .slice(0, 6)
-      .map((item, index) => (
-        <Card
-          key={index}
-          id={item.id}
-          name={item.name}
-          description={item.description}
-          price={item.price}
-        />
-      ));
-  };
 
   return (
-    <div className="h-fit bg-hero-pattern text-secondary overlay">
+    <div className="h-screen bg-hero-pattern text-secondary overlay">
       <Nav account={account} setAccount={setAccount} />
       <h1 className="text-3xl font-bold text-white text-center underline">
         Marketplace
       </h1>
-      <div className="px-4 py-4 grid-cols-4 grid gap-5 mt-5 ">
-        {renderCards()}
+      <div className="px-4 py-4 grid-cols-4 grid gap-5 mt-5 h-fit ">
+        {provider && contract && market ? (
+          <Card contract={contract} provider={provider} market={market} />
+        ) : null}
       </div>
     </div>
   );

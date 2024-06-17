@@ -1,8 +1,9 @@
 interface IHome {
-  id: number;
   name: string;
   description: string;
+  external_url: string;
   price: string;
+  image: string;
 }
 const Preview = ({
   home,
@@ -23,7 +24,9 @@ const Preview = ({
         <div className="w-[80%] h-[300px] fixed top-1/2 left-2/3 -translate-x-1/2 -translate-y-1/2 text-white flex gap-4 ">
           <div>
             <img
-              src="/static/images/bg.jpg"
+              src={`https://blush-advisory-shark-880.mypinata.cloud/ipfs/${home.image.substring(
+                7
+              )}`}
               alt=""
               className="w-[100%] h-[300px] rounded-lg object-cover"
             />

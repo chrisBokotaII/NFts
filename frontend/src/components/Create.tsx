@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { main } from "../helper/pinata";
+import { ethers } from "ethers";
 
-const Create = () => {
+const Create = ({
+  provider,
+  contract,
+}: {
+  provider: ethers.BrowserProvider | undefined;
+  contract: ethers.Contract | undefined;
+}) => {
   const [form, setForm] = useState({
     name: "",
     price: "",
@@ -40,7 +47,21 @@ const Create = () => {
       if (cid) {
         alert("NFT created successfully");
       }
-      window.location.reload();
+
+      const signer = await provider?.getSigner();
+      if (!signer) {
+        alert("No signer found");
+        return;
+      }
+      const tx = await contract
+        ?.connect(signer)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .safeMint(signer?.getAddress(), cid);
+      await tx?.wait();
+      console.log(tx, signer);
+
+      // window.location.reload();
     } else {
       alert("No file selected");
     }
@@ -57,7 +78,7 @@ const Create = () => {
           type="text"
           id="name"
           name="name"
-          className="p-1 w-1/2 rounded-lg"
+          className="p-1 w-1/2 rounded-lg text-black"
           onChange={handleChange}
         />
 
@@ -66,7 +87,7 @@ const Create = () => {
           type="text"
           id="price"
           name="price"
-          className="p-1 w-1/2 rounded-lg"
+          className="p-1 w-1/2 rounded-lg text-black"
           onChange={handleChange}
         />
 
