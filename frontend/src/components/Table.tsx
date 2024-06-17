@@ -75,8 +75,6 @@ const Table = ({
       const marketContract = market.connect(signer);
       const marketplaceAddress = import.meta.env
         .VITE_MARKETPLACE_CONTRACT_ADDRESS;
-      const tokenId = id;
-      const priceInWei = price;
 
       // Check if the NFT is already approved for the marketplace contract
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -86,17 +84,14 @@ const Table = ({
         // Approve the marketplace contract to transfer the NFT
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
-        const approvalTx = await nftContract.approve(
-          marketplaceAddress,
-          tokenId
-        );
+        const approvalTx = await nftContract.approve(marketplaceAddress, id);
         await approvalTx.wait(1);
       }
 
       // List the NFT on the marketplace
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
-      const listTx = await marketContract.listNFT(tokenId, priceInWei);
+      const listTx = await marketContract.listNFT(id, price);
 
       console.log("NFT listing transaction:", listTx.hash);
     } catch (error) {
