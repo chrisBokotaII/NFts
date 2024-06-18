@@ -71,13 +71,15 @@ contract Marketplace {
         require(nft.owner != msg.sender, "Cannot buy your own NFT");
 
         nft.sold = true;
-        address seller = nft.owner;
+        address seller = payable(nft.owner);
 
         // Transfer the NFT from the marketplace contract to the buyer
         token.safeTransferFrom(address(this), msg.sender, _tokenId);
 
         // Transfer the payment to the seller
-        payable(seller).transfer(msg.value);
+        (bool sent,)=seller.call{value: msg.value}("");
+        require(sent, "Failed to send payment");
+
 
         emit NFTSold(_tokenId, msg.sender, msg.value);
 
