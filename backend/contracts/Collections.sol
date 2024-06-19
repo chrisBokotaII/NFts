@@ -18,9 +18,9 @@ contract Collections is ERC721, ERC721URIStorage,ERC721Enumerable {
         
     {}
 
-    function safeMint(address to, string memory uri) public{
+    function safeMint( string memory uri) public{
         uint256 tokenId = _nextTokenId++;
-        _safeMint(to, tokenId);
+        _safeMint(msg.sender, tokenId);
         _setTokenURI(tokenId, uri);
        
 
@@ -62,5 +62,5 @@ contract Collections is ERC721, ERC721URIStorage,ERC721Enumerable {
     {
         return super.supportsInterface(interfaceId);
     }
+    
 }
-

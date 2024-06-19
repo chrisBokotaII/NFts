@@ -16,7 +16,7 @@ describe("Lock", function () {
     await lock.waitForDeployment();
 
     const Market = await hre.ethers.getContractFactory("Marketplace");
-    const market = await Market.deploy(lock.target, admin.address);
+    const market = await Market.connect(admin).deploy(lock.target);
 
     return { lock, seller, admin, buyer, market };
   }
@@ -26,16 +26,14 @@ describe("Lock", function () {
       const { lock, seller, admin, market, buyer } = await loadFixture(
         deployOneYearLockFixture
       );
-      const tx1 = await lock
-        .connect(seller)
-        .safeMint(seller.address, "ipfs://");
+      const tx1 = await lock.connect(seller).safeMint("ipfs://");
       // const tx2 = await lock
       //   .connect(seller)
       //   .safeMint(seller.address, "ipfs://");
       const approved = await lock.connect(seller).approve(market.target, 0);
       await approved.wait();
       await tx1.wait();
-      const tx2 = await market.connect(seller).listNFT(0, 1);
+      const tx2 = await market.connect(seller).listNFT(0, converter("1"));
 
       await tx2.wait();
       const tx3 = await market

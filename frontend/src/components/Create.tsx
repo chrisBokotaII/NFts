@@ -57,7 +57,7 @@ const Create = ({
         ?.connect(signer)
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        .safeMint(signer?.getAddress(), cid);
+        .safeMint(cid);
       await tx?.wait();
       console.log(tx, signer);
 

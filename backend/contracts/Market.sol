@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import "hardhat/console.sol";
-
 interface IERC721 {
     function safeTransferFrom(address from, address to, uint256 tokenId) external;
     function transferFrom(address from, address to, uint256 tokenId) external;
@@ -10,28 +8,23 @@ interface IERC721 {
 }
 
 contract Marketplace {
+    error PriceGeaterThanZero( string name, uint256 value );
+
     IERC721 public immutable token;
     address public immutable admin;
-
-    event NFTListed(uint256 indexed tokenId, address indexed owner, uint256 price);
-    event NFTSold(uint256 indexed tokenId, address indexed buyer, uint256 price);
-    event NFTCanceled(uint256 indexed tokenId, address indexed owner);
-
-    constructor(address _nftAddress, address _admin) {
-        require(_nftAddress != address(0), "Invalid NFT address");
-        require(_admin != address(0), "Invalid admin address");
-        token = IERC721(_nftAddress);
-        admin = _admin;
-    }
-
+ 
     struct NFT {
+        uint256 tokenId;
         address owner;
         uint256 price;
         bool sold;
     }
 
-    mapping(uint256 => NFT) public nfts;
+    mapping(uint256 => NFT) public idTonft;
     bool private locked = false;
+
+    // List of NFTs
+    NFT[] public allNfts; 
 
     modifier onlyOwner(uint256 _tokenId) {
         require(token.ownerOf(_tokenId) == msg.sender, "Not the owner");
@@ -49,7 +42,16 @@ contract Marketplace {
         _;
         locked = false;
     }
-    error PriceGeaterThanZero( string name, uint256 value );
+
+    event NFTListed(uint256 indexed tokenId, address indexed owner, uint256 price);
+    event NFTSold(uint256 indexed tokenId, address indexed buyer, uint256 price);
+    event NFTCanceled(uint256 indexed tokenId, address indexed owner);
+
+    constructor(address _nftAddress) {
+        require(_nftAddress != address(0), "Invalid NFT address");
+        token = IERC721(_nftAddress);
+        admin = msg.sender;
+    }
 
     function listNFT(uint256 _tokenId, uint256 _price) external onlyOwner(_tokenId) {
         if(_price <= 0){
@@ -58,14 +60,24 @@ contract Marketplace {
         // Transfer the NFT from the owner to the marketplace contract
         token.transferFrom(msg.sender, address(this), _tokenId);
 
+        // Create a new NFT struct and push it to the array
+        NFT memory newNFT = NFT({
+            tokenId: _tokenId,
+            owner: msg.sender,
+            price: _price,
+            sold: false
+        });
+    
+        allNfts.push(newNFT);
+
         // List the NFT
-        nfts[_tokenId] = NFT(msg.sender, _price, false);
+        idTonft[_tokenId] = newNFT;
 
         emit NFTListed(_tokenId, msg.sender, _price);
     }
 
     function buyNFT(uint256 _tokenId) external payable nonReentrant {
-        NFT storage nft = nfts[_tokenId];
+        NFT storage nft = idTonft[_tokenId];
         require(!nft.sold, "NFT already sold");
         require(nft.price == msg.value, "Incorrect price");
         require(nft.owner != msg.sender, "Cannot buy your own NFT");
@@ -77,18 +89,17 @@ contract Marketplace {
         token.safeTransferFrom(address(this), msg.sender, _tokenId);
 
         // Transfer the payment to the seller
-        (bool sent,)=seller.call{value: msg.value}("");
+        (bool sent, ) = seller.call{value: msg.value}("");
         require(sent, "Failed to send payment");
-
 
         emit NFTSold(_tokenId, msg.sender, msg.value);
 
         // Remove the NFT from the listings
-        delete nfts[_tokenId];
+        removeNFTFromArray(_tokenId);
     }
 
     function cancelNFT(uint256 _tokenId) external onlyAdmin {
-        NFT storage nft = nfts[_tokenId];
+        NFT storage nft = idTonft[_tokenId];
         require(!nft.sold, "NFT already sold");
 
         // Transfer the NFT back to the owner
@@ -97,10 +108,27 @@ contract Marketplace {
         emit NFTCanceled(_tokenId, nft.owner);
 
         // Remove the NFT from the listings
-        delete nfts[_tokenId];
+        removeNFTFromArray(_tokenId);
     }
 
     function getNFT(uint256 _tokenId) external view returns (NFT memory) {
-        return nfts[_tokenId];
+        return idTonft[_tokenId];
+    }
+
+    function getAllNFTs() external view returns (NFT[] memory) {
+        return allNfts;
+    }
+
+
+function removeNFTFromArray(uint256 _tokenId) internal {
+        uint256 length = allNfts.length;
+        for (uint256 i = 0; i < length; i++) {
+            if (allNfts[i].tokenId == _tokenId) {
+                // Swap the NFT with the last element and pop the last element
+                allNfts[i] = allNfts[length - 1];
+                allNfts.pop();
+                break;
+            }
+        }
     }
 }
