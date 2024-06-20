@@ -20,21 +20,26 @@ const Nav = ({ account, setAccount }) => {
       setAccount(account);
     }
   };
+
   return (
     <div>
-      <header className="flex justify-between items-center p-5 text-secondary shadow-botoom">
-        <div id="logo" className="w-[40%] md:w-[30%]">
-          <a className="text-md flex p-3 " href="/">
-            NFT Marketplace <FaShopify />
+      <header className="flex flex-col md:flex-row justify-between items-center p-5 text-secondary shadow-bottom bg-transparent">
+        <div
+          id="logo"
+          className="w-full md:w-auto flex justify-center md:justify-start mb-4 md:mb-0"
+        >
+          <a className="text-lg flex items-center space-x-2" href="/">
+            <span>NFT Marketplace</span>
+            <FaShopify />
           </a>
         </div>
-        <nav className="flex gap-3 w-[50%] md:w-[30%] p-3 *:text-[0.8rem] *:p-3  ">
+        <nav className="flex flex-wrap justify-center md:justify-end gap-4 w-full md:w-auto">
           <a
             href="/"
             className={
-              window.location.href === "/"
-                ? "underline underline-offset-4"
-                : "text-secondary"
+              window.location.pathname === "/"
+                ? "underline underline-offset-4 text-blue-500"
+                : "text-white"
             }
           >
             Home
@@ -42,9 +47,9 @@ const Nav = ({ account, setAccount }) => {
           <a
             href="/create"
             className={
-              window.location.href === "/create"
-                ? "underline underline-offset-4"
-                : "text-secondary"
+              window.location.pathname === "/create"
+                ? "underline underline-offset-4 text-blue-500"
+                : "text-white"
             }
           >
             Create
@@ -52,9 +57,9 @@ const Nav = ({ account, setAccount }) => {
           <a
             href="/dashboard"
             className={
-              window.location.href === "/dashboard"
-                ? "underline underline-offset-4"
-                : "text-secondary"
+              window.location.pathname === "/dashboard"
+                ? "underline underline-offset-4 text-blue-500"
+                : "text-white"
             }
           >
             Dashboard
@@ -62,20 +67,23 @@ const Nav = ({ account, setAccount }) => {
           <a
             href="/marketplace"
             className={
-              window.location.href === "/marketplace"
-                ? "underline underline-offset-4"
-                : "text-secondary"
+              window.location.pathname === "/marketplace"
+                ? "underline underline-offset-4 text-blue-500"
+                : "text-white"
             }
           >
             Marketplace
           </a>
         </nav>
-        <div id="profile" className=" p-3 ">
+        <div
+          id="profile"
+          className="flex justify-center md:justify-end w-full md:w-auto mt-4 md:mt-0"
+        >
           {account ? (
             <button
               type="button"
               disabled
-              className=" text-[0.8rem] bg-green-500 text-white font-bold py-2 px-6 rounded flex items-center gap-2 hover:bg-green-600 transition-all duration-300 ease-in-out"
+              className="text-sm bg-green-500 text-white font-bold py-2 px-4 rounded flex items-center gap-2 hover:bg-green-600 transition-all duration-300 ease-in-out"
             >
               <span>
                 {account.slice(0, 5) + "...." + account.slice(38, 42)}
@@ -86,9 +94,9 @@ const Nav = ({ account, setAccount }) => {
             <button
               type="button"
               onClick={connectWallet}
-              className=" text-[0.8rem] bg-green-500 text-white font-bold py-2 px-6 rounded flex items-center gap-2 hover:bg-green-600 transition-all duration-300 ease-in-out"
+              className="text-sm bg-green-500 text-white font-bold py-2 px-4 rounded flex items-center gap-2 hover:bg-green-600 transition-all duration-300 ease-in-out"
             >
-              <span>connect your</span> <FaWallet />
+              <span>Connect Wallet</span> <FaWallet />
             </button>
           )}
         </div>

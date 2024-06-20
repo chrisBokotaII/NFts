@@ -105,27 +105,27 @@ const Table = ({
     return <div className="w-[90%] m-auto text-center pt-20">No NFTs</div>;
 
   return (
-    <div className="w-[100%] m-auto">
-      <div className="overflow-x-auto p-3  h-[67vh] w-full m-auto">
-        <table className="table-auto bg-white text-[0.7rem] border-separate border-spacing-2 border bordr-slate-500 w-full p-2">
-          <thead className="ltr:text-left rtl:text-right">
-            <tr>
-              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem]">
+    <div className="w-full m-auto p-4">
+      <div className="overflow-x-auto p-3 h-[70vh] w-full m-auto">
+        <table className="table-auto bg-white text-[0.7rem] border-separate border-spacing-2 border border-slate-500 w-full p-2">
+          <thead className="ltr:text-left rtl:text-right sticky top-0 bg-white shadow-md">
+            <tr className="bg-slate-500">
+              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem] border-b border-gray-300">
                 #ID
               </th>
-              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem]">
+              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem] border-b border-gray-300">
                 Image
               </th>
-              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem]">
+              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem] border-b border-gray-300">
                 Name
               </th>
-              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem]">
+              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem] border-b border-gray-300">
                 Description
               </th>
-              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem]">
+              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem] border-b border-gray-300">
                 Price
               </th>
-              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem]">
+              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem] border-b border-gray-300">
                 Action
               </th>
             </tr>
@@ -134,31 +134,31 @@ const Table = ({
             {nfts &&
               nfts.map((nft, index) => (
                 <tr key={index} className="cursor-pointer hover:bg-slate-400">
-                  <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                  <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 border-b border-gray-200">
                     {nft.id}
                   </td>
-                  <td>
+                  <td className="border-b border-gray-200">
                     <img
                       src={`https://blush-advisory-shark-880.mypinata.cloud/ipfs/${nft.image.substring(
                         7
                       )}`}
                       onClick={() => togglePop(nft)}
-                      alt="img"
-                      className="w-[40%] h-[150px] rounded-lg text-center object-fit"
+                      alt="NFT"
+                      className="w-16 h-16 rounded-lg object-cover"
                     />
                   </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                  <td className="whitespace-nowrap px-4 py-2 text-gray-700 border-b border-gray-200">
                     {nft.name}
                   </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-wrap">
+                  <td className="whitespace-nowrap px-4 py-2 text-gray-700 border-b border-gray-200">
                     {nft.description}
                   </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                  <td className="whitespace-nowrap px-4 py-2 text-gray-700 border-b border-gray-200">
                     {nft.price}
                   </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                  <td className="whitespace-nowrap px-4 py-2 text-gray-700 border-b border-gray-200">
                     <button
-                      className="text-[0.8rem] bg-green-500 text-white font-bold py-2 px-6 rounded flex items-center gap-2 hover:bg-green-600 transition-all duration-300 ease-in-out"
+                      className="text-[0.8rem] bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600 transition-all duration-300 ease-in-out"
                       type="button"
                       onClick={() => list(nft.id, nft.price)}
                     >

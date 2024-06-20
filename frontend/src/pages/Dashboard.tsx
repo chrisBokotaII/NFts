@@ -56,12 +56,18 @@ const Dashboard = () => {
     }
   }, [provider]);
   return (
-    <div className="h-screen bg-hero-pattern text-secondary overlay">
+    <div className="h-fit bg-hero-pattern text-secondary overlay flex flex-col">
       <Nav account={account} setAccount={setAccount} />
-      <h1 className="text-3xl font-bold text-white text-center">Dashboard</h1>
-      {provider && contract && market ? (
-        <Table contract={contract} provider={provider} market={market} />
-      ) : null}
+      <div className="flex flex-1 flex-col justify-center items-center">
+        <h1 className="text-3xl font-bold text-white text-center my-8">
+          Dashboard
+        </h1>
+        {provider && contract && market ? (
+          <Table contract={contract} provider={provider} market={market} />
+        ) : (
+          <p className="text-xl text-white mt-8">Loading data...</p>
+        )}
+      </div>
     </div>
   );
 };

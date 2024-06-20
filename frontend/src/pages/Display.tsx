@@ -58,12 +58,12 @@ const Display = () => {
   }, []);
 
   return (
-    <div className="h-screen bg-hero-pattern text-secondary overlay">
+    <div className="h-fit min-h-screen bg-hero-pattern text-secondary overlay w-full sm:h-fit">
       <Nav account={account} setAccount={setAccount} />
       <h1 className="text-3xl font-bold text-white text-center underline">
         Marketplace
       </h1>
-      <div className="px-4 py-4 grid-cols-4 grid gap-5 mt-5 h-fit ">
+      <div className="px-4 py-4  h-fit  md:w-full md:grid-cols-2 sm:grid-cols-1 sm:w-[50%] sm:m-auto  xl:grid-cols-4 ">
         {provider && contract && market ? (
           <Card contract={contract} provider={provider} market={market} />
         ) : null}

@@ -47,7 +47,7 @@ const Upload = () => {
   }, [provider]);
 
   return (
-    <div className="h-screen bg-hero-pattern text-secondary overlay">
+    <div className="h-fit min-h-screen bg-hero-pattern text-secondary overlay">
       <Nav account={account} setAccount={setAccount} />
       <h1 className="text-3xl font-bold text-white text-center">Upload</h1>
       <Create provider={provider} contract={contract} />

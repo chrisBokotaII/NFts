@@ -5,47 +5,49 @@ interface IHome {
   price: string;
   image: string;
 }
+
 const Preview = ({
   home,
   togglePop,
 }: {
   home: IHome | undefined;
-
   togglePop: () => void;
 }) => {
   return (
-    <div className="w-screen  h-screen fixed bg-black bg-opacity-90 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-      {/* <div className="fixed z-10 inset-0 overflow-y-auto">
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="fixed inset-0 transition-opacity">
-            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-          </div> */}
+    <div
+      className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center"
+      onClick={togglePop}
+    >
       {home && (
-        <div className="w-[80%] h-[300px] fixed top-1/2 left-2/3 -translate-x-1/2 -translate-y-1/2 text-white flex gap-4 ">
-          <div>
+        <div
+          className="w-[80%] max-w-3xl bg-gray-800 p-6 rounded-lg shadow-lg text-white flex flex-col md:flex-row gap-6"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="w-full md:w-1/2">
             <img
               src={`https://blush-advisory-shark-880.mypinata.cloud/ipfs/${home.image.substring(
                 7
               )}`}
-              alt=""
-              className="w-[100%] h-[300px] rounded-lg object-cover"
+              alt={home.name}
+              className="w-full h-[500px] rounded-lg object-cover"
             />
           </div>
-          <div className="p-4 flex flex-col gap-4">
-            <h2 className="text-[1.5rem] ">{home.name}</h2>
-            <p className="text-[0.8rem] ">{home.description}</p>
-            <p className="text-[0.7rem] text-green-600">{home.price}</p>
-          </div>
-          <div>
-            <button
-              type="button"
-              title="close"
-              className="text-[1.5rem] text-white font-bold py-2 px-6 rounded flex items-center gap-2 hover:bg-red-600 transition-all duration-300 ease-in-out"
-              onClick={togglePop}
-            >
-              {" "}
-              x{" "}
-            </button>
+          <div className="w-full md:w-1/2 flex flex-col justify-between">
+            <div>
+              <h2 className="text-2xl font-bold mb-4">{home.name}</h2>
+              <p className="mb-4">{home.description}</p>
+              <a
+                href={home.external_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 underline"
+              >
+                More Info
+              </a>
+            </div>
+            <div className="mt-4 md:mt-0">
+              <p className="text-xl font-bold">Price: {home.price}</p>
+            </div>
           </div>
         </div>
       )}

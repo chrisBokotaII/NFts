@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { main } from "../helper/pinata";
 import { ethers } from "ethers";
+import { useNavigate } from "react-router-dom";
 
 const Create = ({
   provider,
@@ -16,7 +17,7 @@ const Create = ({
     external_url: "https://pinata.cloud",
   });
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
-
+  const navigate = useNavigate();
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file && file.size > 1048576) {
@@ -61,14 +62,14 @@ const Create = ({
       await tx?.wait();
       console.log(tx, signer);
 
-      // window.location.reload();
+      navigate("/dashboard");
     } else {
       alert("No file selected");
     }
   };
 
   return (
-    <div className="w-1/2 m-auto  p-2 rounded-xl overlay">
+    <div className="xl:w-1/2 m-auto  p-2 rounded-xl overlay sm:w-[80%] sm:p-2 md:w-1/2 ">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-3 has-[input]:p-2 justify-center items-center"
