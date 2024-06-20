@@ -44,7 +44,7 @@ const Upload = () => {
       );
       setContract(contract);
     }
-  }, [provider]);
+  }, [provider, collectionsAddress]);
 
   return (
     <div className="h-fit min-h-screen bg-hero-pattern text-secondary overlay">
