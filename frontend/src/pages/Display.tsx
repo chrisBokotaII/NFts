@@ -51,7 +51,7 @@ const Display = () => {
       setMarket(contract2);
       setContract(contract);
     }
-  }, [provider]);
+  }, [provider, collectionsAddress, marketplaceAddress]);
 
   useEffect(() => {
     connectWallet();
