@@ -18,6 +18,7 @@ const Create = ({
   });
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
   const navigate = useNavigate();
+
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file && file.size > 1048576) {
@@ -37,82 +38,99 @@ const Create = ({
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (selectedFile) {
-      const cid = await main(
-        selectedFile,
-        form.name,
-        form.description,
-        form.external_url,
-        form.price
-      );
-      console.log(cid);
-      if (cid) {
-        alert("NFT created successfully");
-      }
+      try {
+        const cid = await main(
+          selectedFile,
+          form.name,
+          form.description,
+          form.external_url,
+          form.price
+        );
+        console.log(cid);
+        if (cid) {
+          alert("NFT created successfully");
+        }
 
-      const signer = await provider?.getSigner();
-      if (!signer) {
-        alert("No signer found");
-        return;
-      }
-      const tx = await contract
-        ?.connect(signer)
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        .safeMint(cid);
-      await tx?.wait();
-      console.log(tx, signer);
+        const signer = await provider?.getSigner();
+        if (!signer) {
+          alert("No signer found");
+          return;
+        }
+        const tx = await contract
+          ?.connect(signer)
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .safeMint(cid);
+        await tx?.wait();
+        console.log(tx, signer);
 
-      navigate("/dashboard");
+        navigate("/dashboard");
+      } catch (error) {
+        console.error("Error creating NFT:", error);
+        alert("An error occurred while creating the NFT.");
+      }
     } else {
       alert("No file selected");
     }
   };
 
   return (
-    <div className="xl:w-1/2 m-auto  p-2 rounded-xl overlay sm:w-[80%] sm:p-2 md:w-1/2 ">
+    <div className="xl:w-1/2 m-auto p-6 rounded-xl overlay sm:w-fit sm:p-2 md:w-1/2">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-3 has-[input]:p-2 justify-center items-center"
+        className="flex flex-col gap-4 justify-center items-center"
       >
-        <label htmlFor="name">Name:</label>
+        <label htmlFor="name" className="text-white">
+          Name:
+        </label>
         <input
           type="text"
           id="name"
           name="name"
-          className="p-1 w-1/2 rounded-lg text-black"
+          className="p-2 w-full sm:w-3/4 md:w-1/2 rounded-lg text-black"
           onChange={handleChange}
+          required
         />
 
-        <label htmlFor="price">Price:</label>
+        <label htmlFor="price" className="text-white">
+          Price:
+        </label>
         <input
           type="text"
           id="price"
           name="price"
-          className="p-1 w-1/2 rounded-lg text-black"
+          className="p-2 w-full sm:w-3/4 md:w-1/2 rounded-lg text-black"
           onChange={handleChange}
+          required
         />
 
-        <label htmlFor="img" className="text-center">
+        <label htmlFor="img" className="text-white">
           Image:
         </label>
         <input
           type="file"
           id="img"
           name="img"
-          className="rounded-lg"
+          className="p-2 rounded-lg text-white"
           onChange={changeHandler}
+          required
         />
 
-        <label htmlFor="description">Description:</label>
+        <label htmlFor="description" className="text-white">
+          Description:
+        </label>
         <textarea
           id="description"
           name="description"
           placeholder="Describe your NFT..."
-          className="p-2 w-1/2 rounded-lg text-black"
+          className="p-2 w-full sm:w-3/4 md:w-1/2 rounded-lg text-black"
           onChange={handleChange}
+          required
         />
-        <hr />
-        <button type="submit" className="bg-green-500 w-1/4 p-1 rounded-lg">
+        <button
+          type="submit"
+          className="bg-green-500 w-1/4 p-2 rounded-lg text-white hover:bg-green-600 transition-colors"
+        >
           Submit
         </button>
       </form>

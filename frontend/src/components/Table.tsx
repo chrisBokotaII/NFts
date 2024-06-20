@@ -102,7 +102,9 @@ const Table = ({
   };
 
   if (!nfts || nfts.length === 0)
-    return <div className="w-[90%] m-auto text-center pt-20">No NFTs</div>;
+    return (
+      <div className="w-[90%] m-auto text-center pt-20 h-screen">No NFTs</div>
+    );
 
   return (
     <div className="w-full m-auto p-4">
