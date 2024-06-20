@@ -146,7 +146,7 @@ const Table = ({
                       )}`}
                       onClick={() => togglePop(nft)}
                       alt="NFT"
-                      className="w-16 h-16 rounded-lg object-cover"
+                      className="w-16 h-[150px] rounded-lg object-cover"
                     />
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700 border-b border-gray-200">

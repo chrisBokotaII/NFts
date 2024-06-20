@@ -19,6 +19,10 @@ const config: HardhatUserConfig = {
       url: process.env.GANACHE_URL,
       accounts: [process.env.PRIVATE_KEY as string],
     },
+    sepolia: {
+      url: process.env.API_URL,
+      accounts: [`0x${process.env.PRIVATE_KEY}`],
+    },
   },
   paths: {
     artifacts: "../frontend/src/artifacts",

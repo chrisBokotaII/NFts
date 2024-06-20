@@ -100,10 +100,10 @@ const Card = ({
 
   return nfts.map((item, index) => (
     <div
-      className="p-4 bg-white shadow-lg rounded-xl flex flex-col gap-4 mb-4 "
+      className="p-4 bg-white shadow-lg text-center rounded-xl flex flex-col gap-4 mb-4 w-[40%] "
       key={index}
     >
-      <h1 className="text-lg font-bold text-gray-800 sm:text-sm">
+      <h1 className="xl:text-lg font-bold text-gray-800 sm:text-sm text-center">
         {item.name}
       </h1>
       <img
@@ -111,10 +111,10 @@ const Card = ({
           7
         )}`}
         alt={item.name}
-        className="w-full h-48 rounded-xl object-cover"
+        className="w-[70%] h-[400px] rounded-xl object-fit self-center"
       />
-      <p className="text-[0.8rem] text-gray-600">{item.description}</p>
-      <p className="text-[0.7rem] text-green-500 font-semibold">{item.price}</p>
+      <p className="text-[1rem] text-gray-600">{item.description}</p>
+      <p className="text-[0.9rem] text-green-500 font-semibold">{item.price}</p>
 
       {admin == user ? (
         <button
