@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import Nav from "../components/Nav";
 import { ethers } from "ethers";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
   const [account, setAccount] = useState("");
+  const navigate = useNavigate();
   const connectWallet = async () => {
     if (
       typeof window !== "undefined" &&
@@ -35,6 +37,7 @@ const LandingPage = () => {
           <p className="text-white mb-5">Buy, Sell and Discover NFTs</p>
           <button
             type="button"
+            onClick={() => navigate("/marketplace")}
             className="text-md m-auto bg-green-500 text-white font-bold py-2 px-6 rounded flex items-center gap-2 hover:bg-green-600 transition-all duration-300 ease-in-out"
           >
             <span>Let's Get Started</span>
