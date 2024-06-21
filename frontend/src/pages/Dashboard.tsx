@@ -1,9 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import Nav from "../components/Nav";
-import Table from "../components/Table";
+const Table = lazy(() => {
+  return Promise.all([
+    import("../components/Table"),
+    new Promise((resolve) => setTimeout(resolve, 3000)),
+  ]).then(([moduleExports]) => moduleExports);
+});
+// import Table from "../components/Table";
 import { ethers } from "ethers";
 import Collections from "../artifacts/contracts/Collections.sol/Collections.json";
 import Marketplace from "../artifacts/contracts/Market.sol/Marketplace.json";
+import LoadingPage from "../components/Loading";
 
 const Dashboard = () => {
   const [account, setAccount] = useState("");
@@ -54,19 +61,21 @@ const Dashboard = () => {
       setMarket(contract2);
       setContract(contract);
     }
-  }, [provider]);
+  }, [provider, marketplaceAddress, collectionsAddress]);
   return (
-    <div className="h-fit bg-hero-pattern text-secondary overlay flex flex-col">
+    <div className="h-fit min-h-screen bg-hero-pattern text-secondary overlay flex flex-col">
       <Nav account={account} setAccount={setAccount} />
+      <h1 className="text-3xl font-bold text-white text-center my-8">
+        Dashboard
+      </h1>
+
       <div className="flex flex-1 flex-col justify-center items-center">
-        <h1 className="text-3xl font-bold text-white text-center my-8">
-          Dashboard
-        </h1>
         {provider && contract && market ? (
-          <Table contract={contract} provider={provider} market={market} />
-        ) : (
-          <p className="text-xl text-white mt-8">Loading data...</p>
-        )}
+          <Suspense fallback={<LoadingPage />}>
+            {" "}
+            <Table contract={contract} provider={provider} market={market} />
+          </Suspense>
+        ) : null}
       </div>
     </div>
   );

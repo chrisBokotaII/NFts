@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Nav from "../components/Nav";
 import { ethers } from "ethers";
 import Card from "../components/Card";
+
 import Collections from "../artifacts/contracts/Collections.sol/Collections.json";
 import Marketplace from "../artifacts/contracts/Market.sol/Marketplace.json";
 
@@ -63,7 +64,8 @@ const Display = () => {
       <h1 className="text-3xl font-bold text-white text-center underline">
         Marketplace
       </h1>
-      <div className="px-4 py-4   h-fit  md:w-full md:grid-cols-2 sm:grid-cols-1 sm:w-[50%] sm:m-auto  xl:grid-cols-4  ">
+
+      <div className="px-4 py-4 h-fit flex  flex-wrap gap-4 justify-between grid-cols-4 ">
         {provider && contract && market ? (
           <Card contract={contract} provider={provider} market={market} />
         ) : null}

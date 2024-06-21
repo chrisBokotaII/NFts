@@ -15,4 +15,12 @@
       )
       fill 1;
   }
+
+  .Fillter {
+    filter: grayscale(0%);
+  }
+
+  .Fillter:hover {
+    filter: grayscale(100%);
+  }
 }
