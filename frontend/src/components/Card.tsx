@@ -80,7 +80,7 @@ const Card = ({
     if (market) {
       try {
         const signer = await provider.getSigner();
-        const tx = await market
+        await market
           .connect(signer)
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           //@ts-ignore
@@ -88,7 +88,6 @@ const Card = ({
             value: ethers.parseEther(price),
           });
         window.location.reload();
-        console.log(tx);
       } catch (error) {
         alert("Transaction failed");
         console.error("Error buying NFT:", error);
