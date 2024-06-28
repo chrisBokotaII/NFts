@@ -126,34 +126,31 @@ const Card = ({
   }, [market, provider]);
 
   return (
-    <div className="w-full m-auto p-4 flex flex-wrap gap-4 items-center justify-between">
+    <div className="w-full  p-4 flex gap-4 flex-wrap">
       {nfts.map((item, index) => (
         <div
-          className="relative p-1 rounded-xl mb-4 w-[30%] overflow-hidden "
+          className="relative p-1 rounded-xl mb-4 w-[30%] overflow-hidden"
           key={index}
-          style={{
-            background: "linear-gradient(135deg, #6EE7B7 0%, #3B82F6 100%)",
-          }}
         >
-          <div className="p-4 bg-white shadow-lg text-center rounded-xl flex flex-row gap-4 h-fit">
+          <div className="p-4 bg-white shadow-lg text-center rounded-xl flex flex-col items-center gap-2 h-[400px]">
             <div className="w-1/2">
               <img
                 src={`https://blush-advisory-shark-880.mypinata.cloud/ipfs/${item.image.substring(
                   7
                 )}`}
                 alt={item.name}
-                className="w-[100%] h-[400px] rounded-xl object-fit self-center cursor-pointer Fillter"
+                className="w-[150px] h-[150px] rounded-xl object-cover self-center cursor-pointer Fillter"
                 onClick={() => togglePop(item)}
                 title="Click to view details"
               />
             </div>
 
-            <div className="flex flex-col gap-4 w-1/2">
-              <h1 className="xl:text-[1.3rem] font-bold text-gray-800 sm:text-sm text-center">
+            <div className="flex flex-col gap-2 w-1/2">
+              <h1 className="xl:text-[0.8rem] text-left font-bold text-gray-800 sm:text-sm ">
                 {item.name}
               </h1>
 
-              <p className="text-[0.8rem] text-gray-600">
+              <p className="text-[0.8rem] text-left text-gray-600">
                 {item.description.length > 100
                   ? item.description.substring(0, 100) + "..."
                   : item.description}

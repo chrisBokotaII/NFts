@@ -53,6 +53,24 @@ export default {
         right: "right",
         top: "top",
       },
+      animation: {
+        "flip-horizontal-bottom":
+          "flip-horizontal-bottom 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;",
+      },
+
+      keyframes: {
+        "flip-horizontal-bottom": {
+          "100%": {
+            "-webkit-transform": "rotateX(0);",
+            transform: "rotateX(0);",
+          },
+
+          "0%": {
+            "-webkit-transform": "rotateX(-180deg);",
+            transform: "rotateX(-180deg);",
+          },
+        },
+      },
     },
   },
   plugins: [],

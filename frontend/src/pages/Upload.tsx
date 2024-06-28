@@ -8,6 +8,7 @@ const Upload = () => {
   const [account, setAccount] = useState("");
   const [provider, setProvider] = useState<ethers.BrowserProvider>();
   const [contract, setContract] = useState<ethers.Contract>();
+  const [balance, setBalance] = useState("");
   const collectionsAddress = import.meta.env
     .VITE_NFT_CONTRACT_ADDRESS as string;
 
@@ -20,12 +21,17 @@ const Upload = () => {
       setProvider(provider);
       const signer = await provider.getSigner();
       const account = await signer.getAddress();
+      const balance = await provider.getBalance(account);
       setAccount(account);
+      setBalance(ethers.formatEther(balance));
       window.ethereum.on("accountsChanged", async () => {
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
         const account = await signer.getAddress();
+        const balance = await provider.getBalance(account);
+
         setAccount(account);
+        setBalance(ethers.formatEther(balance));
 
         window.location.reload();
       });
@@ -47,8 +53,8 @@ const Upload = () => {
   }, [provider, collectionsAddress]);
 
   return (
-    <div className="h-fit min-h-screen bg-hero-pattern text-secondary overlay">
-      <Nav account={account} setAccount={setAccount} />
+    <div className="h-fit min-h-screen  bg-black">
+      <Nav account={account} setAccount={setAccount} balance={balance} />
       <h1 className="text-3xl font-bold text-white text-center">Upload</h1>
       <Create provider={provider} contract={contract} />
     </div>

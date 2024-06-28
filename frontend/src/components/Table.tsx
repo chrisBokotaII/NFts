@@ -104,73 +104,52 @@ const Table = ({
   if (!nfts || nfts.length === 0) return;
 
   return (
-    <div className="w-full m-auto p-4">
-      <div className=" p-3 h-fit w-full m-auto">
-        <table className="table-auto bg-white text-[0.7rem] border-separate border-spacing-2 border border-slate-500 w-full p-2">
-          <thead className="ltr:text-left rtl:text-right sticky top-0 bg-gray-400 shadow-md">
-            <tr className="">
-              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem] border-b border-gray-300">
-                #ID
-              </th>
-              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem] border-b border-gray-300">
-                Image
-              </th>
-              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem] border-b border-gray-300">
-                Name
-              </th>
-              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem] border-b border-gray-300">
-                Description
-              </th>
-              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem] border-b border-gray-300">
-                Price
-              </th>
-              <th className="whitespace-nowrap px-4 py-2 font-bold text-green-900 text-[1rem] border-b border-gray-300">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody className="text-[0.7rem]">
-            {nfts &&
-              nfts.map((nft, index) => (
-                <tr key={index} className="cursor-pointer hover:bg-slate-400">
-                  <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 border-b border-gray-200">
-                    {nft.id}
-                  </td>
-                  <td className="border-b border-gray-200">
-                    <img
-                      src={`https://blush-advisory-shark-880.mypinata.cloud/ipfs/${nft.image.substring(
-                        7
-                      )}`}
-                      onClick={() => togglePop(nft)}
-                      alt="NFT"
-                      title="Click to view details"
-                      className="w-full h-[150px] p-4 rounded-lg object-cover cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out"
-                    />
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700 border-b border-gray-200">
-                    {nft.name}
-                  </td>
-                  <td className="whitespace-wrap px-4 py-2 text-gray-700 border-b border-gray-200">
-                    {nft.description.length > 100
-                      ? `${nft.description.substring(0, 100)}...`
-                      : nft.description}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700 border-b border-gray-200">
-                    {nft.price}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700 border-b border-gray-200">
-                    <button
-                      className="text-[0.8rem] bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600 transition-all duration-300 ease-in-out"
-                      type="button"
-                      onClick={() => list(nft.id, nft.price)}
-                    >
-                      List
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+    <div className=" w-full max-w-ful p-6 rounded-lg shadow-lg text-white">
+      <div className="  h-fit w-full px-3 flex flex-row  flex-shrink-0 flex-wrap justify-evenly gap-2 pb-3 rounded-lg shadow-sm shadow-white  ">
+        {nfts &&
+          nfts.map((nft, index) => (
+            <div
+              key={index}
+              className="cursor-pointer w-1/4 m-auto shadow-lg rounded-lg overflow-hidden transition-transform duration-300 ease-in-out transform"
+            >
+              <span className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 border-b border-gray-200 bg-gray-100">
+                {nft.id}
+              </span>
+              <div className="border-b border-gray-200">
+                <img
+                  src={`https://blush-advisory-shark-880.mypinata.cloud/ipfs/${nft.image.substring(
+                    7
+                  )}`}
+                  onClick={() => togglePop(nft)}
+                  alt="NFT"
+                  title="Click to view details"
+                  className="w-full h-[300px] object-cover cursor-pointer transition-transform duration-300 ease-in-out"
+                />
+              </div>
+              <div className="px-4 py-2 bg-white">
+                <h1 className="whitespace-nowrap text-gray-700 text-lg font-bold border-b border-gray-200 py-2">
+                  {nft.name}
+                </h1>
+                <p className="whitespace-wrap text-gray-700 text-sm py-2 border-b border-gray-200">
+                  {nft.description.length > 100
+                    ? `${nft.description.substring(0, 100)}...`
+                    : nft.description}
+                </p>
+                <p className="whitespace-nowrap text-gray-700 text-sm py-2 border-b border-gray-200">
+                  {nft.price}
+                </p>
+                <div className="py-2 text-center">
+                  <button
+                    className="text-[0.8rem] w-full bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600 transition-all duration-300 ease-in-out"
+                    type="button"
+                    onClick={() => list(nft.id, nft.price)}
+                  >
+                    List
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
       </div>
       {toggle && <Preview home={home} togglePop={togglePop} />}
     </div>

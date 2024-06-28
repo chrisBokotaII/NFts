@@ -11,6 +11,7 @@ const Display = () => {
   const [provider, setProvider] = useState<ethers.BrowserProvider>();
   const [contract, setContract] = useState<ethers.Contract>();
   const [market, setMarket] = useState<ethers.Contract>();
+  const [balance, setBalance] = useState("");
 
   const collectionsAddress = import.meta.env
     .VITE_NFT_CONTRACT_ADDRESS as string;
@@ -26,11 +27,15 @@ const Display = () => {
       setProvider(provider);
       const signer = await provider.getSigner();
       const account = await signer.getAddress();
+      const balance = await provider.getBalance(account);
+      setBalance(ethers.formatEther(balance));
       setAccount(account);
       window.ethereum.on("accountsChanged", async () => {
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
         const account = await signer.getAddress();
+        const balance = await provider.getBalance(account);
+        setBalance(ethers.formatEther(balance));
         setAccount(account);
 
         window.location.reload();
@@ -59,13 +64,13 @@ const Display = () => {
   }, []);
 
   return (
-    <div className="h-fit min-h-screen bg-hero-pattern text-secondary overlay w-full sm:h-fit">
-      <Nav account={account} setAccount={setAccount} />
+    <div className="h-fit min-h-screen  bg-black w-full sm:h-fit">
+      <Nav account={account} setAccount={setAccount} balance={balance} />
       <h1 className="text-3xl font-bold text-white text-center underline">
         Marketplace
       </h1>
 
-      <div className="px-4 py-4 h-fit flex  flex-wrap gap-4 justify-between grid-cols-4 ">
+      <div className="px-4 py-4 h-fit flex flex-wrap ">
         {provider && contract && market ? (
           <Card contract={contract} provider={provider} market={market} />
         ) : null}
